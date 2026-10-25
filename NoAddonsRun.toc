@@ -1,5 +1,6 @@
-## Interface: 11507
+## Interface: 11509
 ## Title: NoAddonsRun
+## IconTexture: Interface\Icons\INV_Misc_Spyglass_02
 ## Notes: Proves you play without addons and shows who doesn't.
 ## Notes-esES: Demuestra que juegas sin addons y muestra quién no.
 ## Notes-esMX: Demuestra que juegas sin addons y muestra quién no.
