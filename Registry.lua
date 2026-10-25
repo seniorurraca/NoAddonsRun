@@ -8,11 +8,11 @@ function ns.SetMemberAddOns(name, addons)
     ns.RefreshUI()
 end
 
-function ns.AddMemberChunk(name, index, total, list)
+function ns.AddMemberChunk(key, name, index, total, list)
     if index == 1 then
-        pendingChunks[name] = {}
+        pendingChunks[key] = {}
     end
-    local parts = pendingChunks[name]
+    local parts = pendingChunks[key]
     if not parts then
         return
     end
@@ -20,10 +20,18 @@ function ns.AddMemberChunk(name, index, total, list)
     if index < total then
         return
     end
-    pendingChunks[name] = nil
+    pendingChunks[key] = nil
     ns.SetMemberAddOns(name, { strsplit(",", table.concat(parts, ",")) })
 end
 
 function ns.GetMemberAddOns(name)
     return members[name]
+end
+
+function ns.GetKnownNames()
+    local names = {}
+    for name in pairs(members) do
+        table.insert(names, name)
+    end
+    return names
 end

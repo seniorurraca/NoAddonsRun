@@ -1,15 +1,20 @@
 ## Interface: 11507
 ## Title: NoAddonsRun
-## Notes: Shows which guild members are playing with addons.
+## Notes: Proves you play without addons and shows who doesn't.
+## Notes-esES: Demuestra que juegas sin addons y muestra quién no.
+## Notes-esMX: Demuestra que juegas sin addons y muestra quién no.
 ## Author: aorozco
-## Version: 1.0.0
+## Version: 1.1.0
 ## SavedVariables: NoAddonsRunDB
 
 Core.lua
+Locales\enUS.lua
+Locales\esES.lua
 Scanner.lua
 Registry.lua
 Roster.lua
 Comm.lua
 MainWindow.lua
 MinimapButton.lua
+UnitTooltip.lua
 Init.lua

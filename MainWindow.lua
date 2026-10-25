@@ -1,16 +1,17 @@
 local _, ns = ...
 
+local L = ns.L
 local WIDTH, HEIGHT = 360, 420
 local TEXT_WIDTH = WIDTH - 50
 
 local function formatMember(name, addons)
     if addons == nil then
-        return ("|cff999999%s - no NoAddonsRun (unknown)|r"):format(name)
+        return "|cff999999" .. L.MEMBER_UNKNOWN:format(name) .. "|r"
     end
     if #addons == 0 then
-        return ("|cff55ff55%s - clean|r"):format(name)
+        return "|cff55ff55" .. L.MEMBER_CLEAN:format(name) .. "|r"
     end
-    return ("|cffff5555%s - breaks the rule:|r %s"):format(name, table.concat(addons, ", "))
+    return "|cffff5555" .. L.MEMBER_BREAKS:format(name) .. "|r " .. table.concat(addons, ", ")
 end
 
 local window = CreateFrame("Frame", "NoAddonsRunWindow", UIParent, "BasicFrameTemplateWithInset")
@@ -51,40 +52,44 @@ list:SetJustifyH("LEFT")
 list:SetSpacing(4)
 
 local checkButton = CreateFrame("Button", nil, window, "UIPanelButtonTemplate")
-checkButton:SetSize(120, 22)
+checkButton:SetSize(140, 22)
 checkButton:SetPoint("BOTTOM", 0, 14)
-checkButton:SetText("Check guild")
-checkButton:SetScript("OnClick", ns.SendQuery)
+checkButton:SetText(L.CHECK_BUTTON)
+checkButton:SetScript("OnClick", ns.AnnounceToAll)
 
 local function renderProof()
     local addons = ns.GetLoadedAddOns()
     if #addons == 0 then
-        proof:SetText("|cff55ff55PLAYING WITHOUT ADDONS|r")
-        proofDetail:SetText(("%s has no other addons loaded."):format(ns.playerName))
+        proof:SetText("|cff55ff55" .. L.PROOF_CLEAN .. "|r")
+        proofDetail:SetText(L.PROOF_CLEAN_DETAIL:format(ns.playerName))
     else
-        proof:SetText("|cffff5555ADDONS LOADED|r")
-        proofDetail:SetText(table.concat(addons, ", "))
+        proof:SetText("|cffff5555" .. L.PROOF_DIRTY .. "|r")
+        proofDetail:SetText(L.PROOF_DIRTY_DETAIL:format(table.concat(addons, ", ")))
     end
 end
 
-local function buildGuildLines(status)
-    if not IsInGuild() then
-        return { "|cff999999Join a guild to show your proof to other players.|r" }
+local function buildLines(sections)
+    local lines = {}
+    if #ns.GetChannels() == 0 then
+        table.insert(lines, "|cff999999" .. L.NO_CHANNEL_HINT .. "|r")
     end
-    local lines = { "Guild members online:" }
-    for _, member in ipairs(status) do
-        table.insert(lines, formatMember(member.name, member.addons))
+    for _, section in ipairs(sections) do
+        table.insert(lines, section.title .. ":")
+        for _, member in ipairs(section.members) do
+            table.insert(lines, formatMember(member.name, member.addons))
+        end
+        table.insert(lines, " ")
     end
     return lines
 end
 
-function ns.RenderWindow(status)
+function ns.RenderWindow(sections)
     if not window:IsShown() then
         return
     end
     renderProof()
-    checkButton:SetShown(IsInGuild())
-    list:SetText(table.concat(buildGuildLines(status), "\n"))
+    checkButton:SetShown(#ns.GetChannels() > 0)
+    list:SetText(table.concat(buildLines(sections), "\n"))
     content:SetHeight(list:GetStringHeight())
 end
 

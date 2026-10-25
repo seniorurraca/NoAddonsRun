@@ -1,8 +1,10 @@
 # NoAddonsRun
 
-A World of Warcraft **Classic Era** addon for guilds that play without addons.
+A World of Warcraft **Classic Era** addon that proves you play without addons.
 
-Ironically, it's the only addon you're allowed to have: it detects which other addons each player has loaded and shows guild members who also run NoAddonsRun who is breaking the rule.
+Ironically, it's the only addon you're allowed to have: it detects which other addons each player has loaded and shows your guild and group mates who also run NoAddonsRun who is breaking the rule.
+
+Available in English and Spanish (follows the game client language).
 
 ## Installation
 
@@ -47,20 +49,21 @@ If the addon shows as out of date on the character screen, either:
 - **Minimap button** (spyglass icon):
   - Click → open the window.
   - Drag → move it around the minimap.
-  - Hover → number of online rule breakers.
-  - The icon turns **red** when you or an online guild member is breaking the rule.
-- **Window** shows your own proof at the top (works without a guild):
-  - Green **PLAYING WITHOUT ADDONS**, or red **ADDONS LOADED** with the list.
-- Below, if you're in a guild, it lists online guild members:
+  - Hover → your status and number of rule breakers.
+  - The icon turns **red** when you or anyone listed is breaking the rule.
+- **Window** shows your own proof at the top (works without a guild or group):
+  - Green **PLAYING WITHOUT ADDONS**, or red **BREAKING THE RULE** with the addons to disable.
+- Below, it lists other players in three sections: **Group**, **Guild online** and **Others seen** (players met earlier this session):
   - Red: breaks the rule (shows their addons).
   - Gray: doesn't have NoAddonsRun (unknown).
   - Green: clean.
-  - **Check guild** button asks everyone to report again.
+  - **Check again** button asks everyone to report again.
+- **Player tooltip**: hovering over a player who runs NoAddonsRun shows their status.
 - **Slash commands**: `/noaddons` or `/nar` toggle the window.
 
 ## How it works
 
-- On login, each player sends the list of addons they have loaded over a hidden guild addon channel, and asks everyone else to report.
+- On login, and when joining a party or raid, each player sends the list of addons they have loaded over hidden guild and group addon channels, and asks everyone else to report.
 - Blizzard's own addons (`Blizzard_*`) and NoAddonsRun itself are ignored.
 - Nothing is posted to chat.
 
@@ -69,3 +72,4 @@ If the addon shows as out of date on the character screen, either:
 - **Honor system.** Anyone can edit the Lua code to always report "clean". The game doesn't let one client inspect another's addons, so no addon can prevent this.
 - Players without NoAddonsRun can't be checked; they show as "unknown".
 - Load-on-demand addons that load after login only show up on the next check.
+- Only players in your guild or group can be checked; there's no server-wide channel.
