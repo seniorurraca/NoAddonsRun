@@ -19,3 +19,7 @@ function ns.GetLoadedAddOns()
     table.sort(loaded)
     return loaded
 end
+
+function ns.IsPlayerClean()
+    return #ns.GetLoadedAddOns() == 0
+end

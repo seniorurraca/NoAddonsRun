@@ -42,7 +42,14 @@ local function showTooltip(self)
     local violators = ns.CountViolators(ns.GetGuildStatus())
     GameTooltip:SetOwner(self, "ANCHOR_LEFT")
     GameTooltip:AddLine("NoAddonsRun")
-    GameTooltip:AddLine(("Online rule breakers: %d"):format(violators), 1, 1, 1)
+    if ns.IsPlayerClean() then
+        GameTooltip:AddLine("You: playing without addons", 0.33, 1, 0.33)
+    else
+        GameTooltip:AddLine("You: addons loaded", 1, 0.33, 0.33)
+    end
+    if IsInGuild() then
+        GameTooltip:AddLine(("Online rule breakers: %d"):format(violators), 1, 1, 1)
+    end
     GameTooltip:AddLine("Click to open. Drag to move.", 0.7, 0.7, 0.7)
     GameTooltip:Show()
 end
@@ -58,7 +65,7 @@ function ns.InitMinimapButton()
 end
 
 function ns.UpdateMinimapIcon(status)
-    if ns.CountViolators(status) > 0 then
+    if not ns.IsPlayerClean() or ns.CountViolators(status) > 0 then
         icon:SetVertexColor(1, 0.3, 0.3)
     else
         icon:SetVertexColor(1, 1, 1)

@@ -48,8 +48,10 @@ If the addon shows as out of date on the character screen, either:
   - Click → open the window.
   - Drag → move it around the minimap.
   - Hover → number of online rule breakers.
-  - The icon turns **red** when an online guild member is breaking the rule.
-- **Window** lists online guild members:
+  - The icon turns **red** when you or an online guild member is breaking the rule.
+- **Window** shows your own proof at the top (works without a guild):
+  - Green **PLAYING WITHOUT ADDONS**, or red **ADDONS LOADED** with the list.
+- Below, if you're in a guild, it lists online guild members:
   - Red: breaks the rule (shows their addons).
   - Gray: doesn't have NoAddonsRun (unknown).
   - Green: clean.

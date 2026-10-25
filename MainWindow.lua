@@ -28,8 +28,16 @@ local title = window:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 title:SetPoint("TOP", 0, -5)
 title:SetText("NoAddonsRun")
 
+local proof = window:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+proof:SetPoint("TOP", 0, -36)
+proof:SetWidth(TEXT_WIDTH)
+
+local proofDetail = window:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+proofDetail:SetPoint("TOP", proof, "BOTTOM", 0, -4)
+proofDetail:SetWidth(TEXT_WIDTH)
+
 local scroll = CreateFrame("ScrollFrame", nil, window, "UIPanelScrollFrameTemplate")
-scroll:SetPoint("TOPLEFT", 12, -32)
+scroll:SetPoint("TOPLEFT", 12, -90)
 scroll:SetPoint("BOTTOMRIGHT", -32, 44)
 
 local content = CreateFrame("Frame", nil, scroll)
@@ -48,11 +56,22 @@ checkButton:SetPoint("BOTTOM", 0, 14)
 checkButton:SetText("Check guild")
 checkButton:SetScript("OnClick", ns.SendQuery)
 
-local function buildLines(status)
-    local lines = { formatMember("You", ns.GetLoadedAddOns()), " " }
-    if not IsInGuild() then
-        table.insert(lines, "You are not in a guild.")
+local function renderProof()
+    local addons = ns.GetLoadedAddOns()
+    if #addons == 0 then
+        proof:SetText("|cff55ff55PLAYING WITHOUT ADDONS|r")
+        proofDetail:SetText(("%s has no other addons loaded."):format(ns.playerName))
+    else
+        proof:SetText("|cffff5555ADDONS LOADED|r")
+        proofDetail:SetText(table.concat(addons, ", "))
     end
+end
+
+local function buildGuildLines(status)
+    if not IsInGuild() then
+        return { "|cff999999Join a guild to show your proof to other players.|r" }
+    end
+    local lines = { "Guild members online:" }
     for _, member in ipairs(status) do
         table.insert(lines, formatMember(member.name, member.addons))
     end
@@ -63,7 +82,9 @@ function ns.RenderWindow(status)
     if not window:IsShown() then
         return
     end
-    list:SetText(table.concat(buildLines(status), "\n"))
+    renderProof()
+    checkButton:SetShown(IsInGuild())
+    list:SetText(table.concat(buildGuildLines(status), "\n"))
     content:SetHeight(list:GetStringHeight())
 end
 
