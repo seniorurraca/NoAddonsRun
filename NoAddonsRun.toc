@@ -1,0 +1,15 @@
+## Interface: 11507
+## Title: NoAddonsRun
+## Notes: Shows which guild members are playing with addons.
+## Author: aorozco
+## Version: 1.0.0
+## SavedVariables: NoAddonsRunDB
+
+Core.lua
+Scanner.lua
+Registry.lua
+Roster.lua
+Comm.lua
+MainWindow.lua
+MinimapButton.lua
+Init.lua
